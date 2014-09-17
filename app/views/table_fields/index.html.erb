@@ -1,0 +1,107 @@
+<div>
+  <ul class="breadcrumb">
+    <li>
+      <a href="/">Home</a> <span class="divider">/</span>
+    </li>
+    <li>
+      <a href="<%= identity_tables_path %>">自定义表单</a> <span class="divider">/</span>
+    </li>
+    <li>
+      <a href="#"><%= @table.table_name %></a>
+    </li>
+  </ul>
+</div>
+<div>
+  <!-- devise的提示信息 start -->
+  <% if flash[:notice] %>
+      <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= notice %>
+      </div>
+  <% end %>
+  <% if flash[:alert] %>
+      <div class="alert alert-block ">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= alert %>
+      </div>
+  <% end %>
+  <% if flash[:error] %>
+      <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= flash[:error] %>
+      </div>
+  <% end %>
+  <% if flash[:success] %>
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= flash[:success] %>
+      </div>
+  <% end %>
+  <!-- devise的提示信息 end -->
+
+  <div class="row-fluid sortable">
+
+    <div class="box span12">
+
+      <div class="box-header well" data-original-title>
+        <h2><%= @table.table_name %>-字段信息</h2>
+        <div class="box-icon">
+          <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+          <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+          <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+        </div>
+      </div>
+
+      <div class="box-content">
+        <p class="left">
+          <%= link_to(new_table_field_path, class: "btn btn-large btn-primary") do %>
+              <i class="icon-white icon-plus-sign"></i>
+              添加字段
+          <% end %>
+        </p>
+        <table class="table table-bordered table-striped table-condensed">
+          <thead>
+          <tr>
+            <th style="font-size: 20px">顺序</th>
+            <th style="font-size: 20px">名称</th>
+            <th style="font-size: 20px">类型</th>
+            <th style="font-size: 20px">备注说明</th>
+            <th style="font-size: 20px">操作</th>
+          </tr>
+          </thead>
+          <% @table_fields.each do |item| %>
+              <tr>
+                <td style="font-size: 20px"><%= item.field_turn %></td>
+                <td style="font-size: 20px;color: #ff0000"><%= item.field_name %></td>
+                <td style="font-size: 20px;color: #0099FF"><%= item.field_type %></td>
+                <td style="font-size: 20px;width: 400px">
+                  <% if !FieldItem.where(field_id: item.id).nil? %>
+                        <% @items = FieldItem.where(field_id: item.id).order('item_turn') %>
+                        <% @items.each do |i| %>
+                          <%= i.item_name %>&nbsp;
+                        <% end %>
+                  <% end %>
+                </td>
+                <td class="center" style="width: 240px;padding-left: 30px">
+                  <% if item.field_type =='radio' || item.field_type =='checkbox' || item.field_type =='select' %>
+                      <%= link_to(field_item_table_fields_path(id:item.id), class:'btn btn-primary') do %>
+                          <i class="icon-pencil icon-white"></i>
+                          选项
+                      <% end %>
+                  <% end %>
+                  <%= link_to(edit_table_field_path(item), class:'btn btn-info') do %>
+                      <i class="icon-edit icon-white"></i>
+                      编辑
+                  <% end %>
+                  <%= link_to(item, :method => :delete, :confirm => "你确定要删除该字段么?", class:'btn btn-danger') do %>
+                      <i class="icon-trash icon-white"></i>
+                      删除
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+          </table>
+      </div>
+    </div><!--/span-->
+  </div><!--/row-->
+</div>

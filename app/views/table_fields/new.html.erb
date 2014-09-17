@@ -1,0 +1,60 @@
+<div>
+  <ul class="breadcrumb">
+    <li>
+      <a href="/">Home</a><span class="divider">/</span>
+    </li>
+    <li>
+      <a href="<%= identity_tables_path %>">自定义表单</a><span class="divider">/</span>
+    </li>
+    <li>
+      <a href="<%= table_fields_path %>"><%= @table.table_name %></a><span class="divider">/</span>
+    </li>
+    <li>
+      <a href="#">新增字段</a>
+    </li>
+  </ul>
+</div>
+<div class="row-fluid sortable">
+  <div class="box span12">
+    <div class="box-header well" data-original-title>
+      <h2><i class="icon-edit"></i>填写<%= @table.table_name %>字段信息</h2>
+
+      <div class="box-icon">
+        <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+        <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+        <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="box-content center" style="width: 500px;padding-top: 30px;padding-bottom: 50px">
+      <%= form_for(@table_field) do |f| %>
+          <% if @table_field.errors.any? %>
+              <div id="error_explanation" style="padding-left: 20%;padding-top: 20px">
+                <ul>
+                  <% @table_field.errors.full_messages.each do |msg| %>
+                      <li style="color: #ff0000;font-size: 18px;text-align: left"><%= msg %></li>
+                  <% end %>
+                </ul>
+              </div>
+          <% end %>
+          <table style="font-size: 18px">
+            <tr>
+              <td><h3>字段名称：</h3></td>
+              <td><%= f.text_field :field_name %></td>
+            </tr>
+            <tr>
+              <td><h3>字段类型：</h3></td>
+              <td style="text-align: left"><%= f.select(:field_type,[['字符类型','string'],['文本类型','text'],['日期类型','date'],['单选项类型','radio'],['多选项类型','select'],['复选项类型','checkbox']],:prompt => '--请选择--') %></td>
+            </tr>
+            <tr>
+              <td><h3>默认值：</h3></td>
+              <td><textarea name="default" rows="6" placeholder="------单选项，多选项，复选项-----请在这里添加默认值！每个值请用‘|’隔开。如:男|女|中性"></textarea></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="login-box"><%= f.submit '提交',class: 'btn btn-success' %></td>
+            </tr>
+          </table>
+      <% end %>
+    </div>
+  </div>
+</div>

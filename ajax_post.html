@@ -1,0 +1,58 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站测试数据</title>
+<script type="text/javascript" src="http://pics2.xiaoma.com/xiaoma/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">var load_time = new Date();</script>
+</head>
+
+<body>
+<script type="text/javascript">
+$(window).load(function() {
+    var httpRequest;
+    //创建httpRequest对象
+    function createHttpRequest(){//创建XMLHttpRequest对象
+        if(window.XMLHttpRequest){//非IE浏览器
+            httpRequest = new XMLHttpRequest();
+        }else{
+            httpRequest = new ActiveObject("Microsoft.XMLHTTP");
+            }
+    }
+        
+    //向办事器发送恳求
+    function sendRequest(url,load_time,page_url){
+        createHttpRequest();
+        var form = new FormData();
+         form.append('load_time', load_time);
+         form.append('page_url', page_url);
+        httpRequest.open("POST",url , true);
+        httpRequest.onreadystatechange=handle;
+        httpRequest.send(form);
+    }
+    function handle(){
+        /*if(httpRequest.readyState==4){
+            if(httpRequest.status==200){
+                var xml = httpRequest.responseText;
+                    alert(xml);
+            }
+        }*/
+    } 
+
+    var page_url = window.location.href;
+    var visit_datetime = "" ;
+    var t = setInterval(function(){
+        if(document.readyState=="complete"){aa();}
+    },10);
+    function aa(){
+        visit_datetime = new Date();
+        var rs = visit_datetime.getTime() -  load_time.getTime();
+        var rs = rs/1000;
+        sendRequest("http://192.168.1.96:3000/browse_monitors",rs,page_url);
+        clearInterval(t);
+    }
+
+});
+</script>
+</body>
+</html>

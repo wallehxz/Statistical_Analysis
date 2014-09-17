@@ -1,0 +1,74 @@
+<div>
+  <ul class="breadcrumb">
+    <li>
+      <a href="/">Home</a> <span class="divider">/</span>
+    </li>
+    <li>
+      <a href="<%= identity_tables_path %>">自定义表单</a><span class="divider">/</span>
+    </li>
+    <li>
+      <a href="<%= identity_table_table_forms_path(@identity_table) %>"><%= @table.table_name %></a>
+    </li>
+  </ul>
+</div>
+<div class="row-fluid sortable">
+  <div class="box span12">
+    <div class="box-header well" data-original-title>
+      <h2><%= @table.table_name %>-详细</h2>
+      <div class="box-icon">
+        <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+        <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+        <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="box-content">
+      <table  class="table table-bordered table-striped">
+        <% @table_item = TableField.where(table_id: @table.id).order('field_turn') %>
+        <% @table_item.each do |item| %>
+            <% if item.field_type == 'string' %>
+                <tr>
+                  <td style="width: 200px"><h3><%= item.field_name %>：</h3></td>
+                  <td style="text-align: left"><%= @table_form.instance_eval("value#{item.field_turn}") %></td>
+                </tr>
+            <% end %>
+            <% if item.field_type == 'text' %>
+                <tr>
+                  <td style="width: 200px"><h3><%= item.field_name %>：</h3></td>
+                  <td style="text-align: left"><%= raw(@table_form.instance_eval("value#{item.field_turn}")) %></td>
+                </tr>
+            <% end %>
+            <% if item.field_type == 'date' %>
+                <tr>
+                  <td style="width: 200px"><h3><%= item.field_name %>：</h3></td>
+                  <td style="text-align: left"><%= @table_form.instance_eval("value#{item.field_turn}") %></td>
+                </tr>
+            <% end %>
+            <% if item.field_type == 'radio' %>
+                <tr>
+                  <td style="width: 200px"><h3><%= item.field_name %>：</h3></td>
+                  <td style="text-align: left"><%= @table_form.instance_eval("value#{item.field_turn}") %></td>
+                </tr>
+            <% end %>
+            <% if item.field_type == 'select' %>
+                <tr>
+                  <td style="width: 200px"><h3><%= item.field_name %>：</h3></td>
+                  <td style="text-align: left"><%= @table_form.instance_eval("value#{item.field_turn}") %></td>
+                </tr>
+            <% end %>
+            <% if item.field_type == 'checkbox' %>
+                <tr>
+                  <td style="width: 200px"><h3><%= item.field_name %>：</h3></td>
+                  <td style="text-align: left"><%= @table_form.instance_eval("value#{item.field_turn}").split('-').join(' ') %></td>
+                </tr>
+            <% end %>
+        <% end %>
+      </table>
+      <div class="form-actions">
+        <%= link_to '编辑' ,edit_identity_table_table_form_path(@identity_table,@table_form) ,class:'btn btn-large btn-info' %>
+        <%= link_to '返回' ,identity_table_table_forms_path(@identity_table) ,class:'btn btn-large btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

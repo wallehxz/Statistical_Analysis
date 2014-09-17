@@ -1,0 +1,47 @@
+<div>
+  <p><%= render 'partial/head' %></p>
+</div>
+<h2 style="text-align: center">浏览时间 升序数据</h2>
+<div style="padding-left: 50px;padding-right: 50px">
+  <% count = 0 %>
+  <% number = 0 %>
+  <% @v_ace.each do |item| %>
+      <p style="display: none"><%= number+=item.load_time.to_f %></p>
+      <p style="display: none"><%= count+=1 %></p>
+  <% end %>
+  <p style="text-align: right"><a class="btn btn-large">平均值：
+    <% if number==0 %>
+        0
+    <% else %>
+        <%= (number/count).round(3) %>
+    <% end %>
+  </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/browse_monitors/visit_ace.xls" class="btn btn-large btn-inverse">导出Excel</a></p>
+  <br>
+  <table  class="table table-bordered table-striped table-condensed">
+    <tr style="color: #149bdf;font-size: 20px;height: 35px">
+      <th style="text-align: center">浏览地址</th>
+      <th style="text-align: center">加载时间</th>
+      <th style="text-align: center">浏览日期</th>
+      <th style="text-align: center;width: 140px">管理操作</th>
+    </tr>
+    <% @visit_ace.each do |feedback| %>
+        <tr>
+          <td style="font-size: 20px"><%= truncate(feedback.page_url , length:50 ) %></td>
+          <td style="font-size: 18px;text-align: center"><%= feedback.load_time %>(s)</td>
+          <td style="text-align: center"><%= feedback.visit_datetime.strftime('%Y-%m-%d %H:%M:%S') %></td>
+          <td><%= link_to(feedback,class:'btn btn-success') do %>
+                <i class="icon-zoom-in icon-white"></i>
+                查看
+            <% end %>
+            <%= link_to(feedback, method: :delete, data: { confirm: '确定删除吗？' },class:'btn btn-danger') do %>
+                <i class="icon-trash icon-white"></i>
+                删除
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+  </table>
+  <p style="font-size: 20px"><%= will_paginate @visit_ace, :previous_label=> '上一页',:next_label=> '下一页',class:'btn btn-large'%>
+  </p>
+</div>

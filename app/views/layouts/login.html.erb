@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>数据监控中心</title>
+  <%= stylesheet_link_tag 'application' %>
+
+  <style type="text/css">
+      body {
+          padding-bottom: 40px;
+      }
+      .sidebar-nav {
+          padding: 9px 0;
+      }
+  </style>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <link rel="shortcut icon" href="/img/favicon.ico">
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<%= yield %>
+<%= javascript_include_tag "application" %>
+</body>
+</html>

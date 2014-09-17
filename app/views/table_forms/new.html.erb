@@ -1,0 +1,102 @@
+<div>
+  <ul class="breadcrumb">
+    <li>
+      <a href="/">Home</a><span class="divider">/</span>
+    </li>
+    <li>
+      <a href="<%= identity_tables_path %>">自定义表单</a><span class="divider">/</span>
+    </li>
+    <li>
+      <a href="<%= table_fields_path %>"><%= @table.table_name %></a><span class="divider">/</span>
+    </li>
+    <li>
+      新增表数据
+    </li>
+  </ul>
+</div>
+<div class="row-fluid sortable">
+  <div class="box span12">
+    <div class="box-header well" data-original-title>
+      <h2><i class="icon-edit"></i>填写<%= @table.table_name %>信息</h2>
+
+      <div class="box-icon">
+        <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+        <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+        <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="box-content center" style="width: 800px;padding-top: 30px;padding-bottom: 50px">
+      <%= form_for([@identity_table,@table_form]) do |f| %>
+          <table style="font-size: 18px">
+            <tr>
+              <td colspan="2"><input name="table_id" value="<%= @table.id %>" style="display: none"></td>
+            </tr>
+            <% @table_item = TableField.where(table_id: @table.id).order('field_turn') %>
+            <% @table_item.each do |item| %>
+                <% if item.field_type == 'string' %>
+                    <tr>
+                      <td style="width: 200px"><h3><%= item.field_name %>：</h3></td>
+                      <td style="text-align: left"><input type="text" name="value<%= item.field_turn%>" class="focused"></td>
+                    </tr>
+                <% end %>
+                <% if item.field_type == 'date' %>
+                    <tr>
+                      <td><h3><%= item.field_name %>：</h3></td>
+                      <td style="text-align: left"><input type="text" name="value<%= item.field_turn%>" class="datepicker"></td>
+                    </tr>
+                <% end %>
+                <% if item.field_type == 'text' %>
+                    <tr>
+                      <td><h3><%= item.field_name %>：</h3></td>
+                      <td style="text-align: left"><textarea name="value<%= item.field_turn%>" class="cleditor"></textarea></td>
+                    </tr>
+                <% end %>
+                <% if item.field_type == 'radio' %>
+                    <tr>
+                      <td><h3><%= item.field_name %>：</h3></td>
+                      <td style="text-align: left">
+                        <% if !FieldItem.where(field_id: item.id).nil? %>
+                            <% FieldItem.where(field_id: item.id).order('id').each do |radio_item| %>
+                                <%= radio_item.item_name %><input type="radio" name="value<%= item.field_turn %>" value="<%= radio_item.item_name %>" />
+                            <% end %>
+                        <% end %>
+                      </td>
+                    </tr>
+                <% end %>
+                <% if item.field_type == 'select' %>
+                    <tr>
+                      <td><h3><%= item.field_name %>：</h3></td>
+                      <td style="text-align: left">
+                        <select name="value<%= item.field_turn%>" class="input-large">
+                          <option>--请选择--</option>
+                          <% if !FieldItem.where(field_id: item.id).nil? %>
+                              <% FieldItem.where(field_id: item.id).order('id').each do |select_item| %>
+                                  <option value="<%= select_item.item_name %>"><%= select_item.item_name %></option>
+                              <% end %>
+                          <% end %>
+                        </select>
+                      </td>
+                    </tr>
+                <% end %>
+                <% if item.field_type == 'checkbox' %>
+                    <tr>
+                      <td><h3><%= item.field_name %>：</h3></td>
+                      <td style="text-align: left">
+                        <% if !FieldItem.where(field_id: item.id).nil? %>
+                            <% FieldItem.where(field_id: item.id).order('id').each do |checkbox_item| %>
+                                <input type="checkbox" name="value<%= item.field_turn %>[]" value="<%= checkbox_item.item_name%>"> <%= checkbox_item.item_name%>
+                            <% end %>
+                        <% end %>
+                        </select>
+                      </td>
+                    </tr>
+                <% end %>
+            <% end %>
+            <tr>
+              <td colspan="2" class="login-box" style="padding-left: 200px;padding-right: 200px"><input type="submit" class="btn btn-success" value="提交表单"></td>
+            </tr>
+          </table>
+      <% end %>
+    </div>
+  </div>
+</div>

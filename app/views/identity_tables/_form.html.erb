@@ -1,0 +1,35 @@
+<div class="row-fluid sortable">
+  <div class="box span12">
+    <div class="box-header well" data-original-title>
+      <h2><i class="icon-edit"></i>填写机经题库信息</h2>
+
+      <div class="box-icon">
+        <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+        <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+        <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="box-content center" style="width: 400px;padding-top: 30px;padding-bottom: 50px">
+      <%= form_for(@identity_table) do |f| %>
+          <% if @identity_table.errors.any? %>
+              <div id="error_explanation" style="padding-left: 20%;padding-top: 20px">
+                <ul>
+                  <% @identity_table.errors.full_messages.each do |msg| %>
+                      <li style="color: #ff0000;font-size: 18px;text-align: left"><%= msg %></li>
+                  <% end %>
+                </ul>
+              </div>
+          <% end %>
+          <table style="font-size: 18px">
+            <tr>
+              <td style="text-align: left">自定义表名：</td>
+              <td><%= f.text_field :table_name %></td>
+            </tr>
+            <tr>
+              <td colspan="2" class="login-box"><%= f.submit '提交',class: " btn btn-success" %></td>
+            </tr>
+          </table>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Table:</b>
+  <%= @table_field.table_id %>
+</p>
+
+<p>
+  <b>Field name:</b>
+  <%= @table_field.field_name %>
+</p>
+
+<p>
+  <b>Field type:</b>
+  <%= @table_field.field_type %>
+</p>
+
+
+<%= link_to 'Edit', edit_table_field_path(@table_field) %> |
+<%= link_to 'Back', table_fields_path %>

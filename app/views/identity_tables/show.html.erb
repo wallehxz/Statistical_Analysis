@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @identity_table.user_id %>
+</p>
+
+<p>
+  <b>Table name:</b>
+  <%= @identity_table.table_name %>
+</p>
+
+
+<%= link_to 'Edit', edit_identity_table_path(@identity_table) %> |
+<%= link_to 'Back', identity_tables_path %>

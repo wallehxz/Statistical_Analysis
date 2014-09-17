@@ -1,0 +1,46 @@
+<div class="well span10 center login-box" style="padding-top: 20px;padding-bottom: 1px;background-image: url(http://img.shu163.com/uploadfiles/sc/2011-01/2011021103213515.jpg);width: 800px;">
+  <form action="/browse_monitors/site_time" method="get">
+    <table>
+      <tr>
+        <td class="input-prepend input-append" style="text-align: left">
+          <span class="add-on" ><i class="icon-list-alt"></i></span>
+          <select onchange="window.location=this.options[this.selectedIndex].value">
+            <option >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请选择排序方式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+            <option value="http://load.data.xiaoma.com/browse_monitors/load_ace">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;加载时间-升序</option>
+            <option value="http://load.data.xiaoma.com/browse_monitors/load_desc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;加载时间-降序</option>
+            <option value="http://load.data.xiaoma.com/browse_monitors/visit_ace">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览时间-升序</option>
+            <option value="http://load.data.xiaoma.com/browse_monitors">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览时间-降序</option>
+          </select>
+        </td>
+        <td class="input-prepend input-append" style="padding-left: 200px">
+          <span class="add-on"><i class="icon-search"></i></span>
+          <input type="text" name="word" placeholder="请输入监测网址">
+        </td>
+      </tr>
+      <tr>
+        <td style="padding-top: 20px"></td>
+      </tr>
+      <tr>
+        <td class="input-prepend input-append">
+          <span class="add-on"><i class="icon-calendar"></i></span>
+          <input type="text" name="start_time"  class="datepicker" placeholder="选择开始日期" />
+        </td>
+        <td class="input-prepend input-append" style="padding-left: 200px">
+          <span class="add-on" ><i class="icon-calendar"></i></span>
+          <input type="text" name="end_time"  class="datepicker" placeholder="选择结束日期" />
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td style="padding-right: 250px"><input type="submit" value="查询" style="font-size: 15px" class="btn btn-success"/></td>
+      </tr>
+    </table>
+  </form>
+
+</div>
+
+
+
+
+
+

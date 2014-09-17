@@ -1,0 +1,116 @@
+<div>
+  <ul class="breadcrumb">
+    <li>
+      <a href="/">Home</a> <span class="divider">/</span>
+    </li>
+    <li>
+      <a href="<%= identity_tables_path %>">自定义表单</a> <span class="divider">/</span>
+    </li>
+    <li>
+      <a href="<%= table_fields_path %>"><%= @table.table_name %></a> <span class="divider">/</span>
+    </li>
+  </ul>
+</div>
+<div>
+  <!-- devise的提示信息 start -->
+  <% if flash[:notice] %>
+      <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= notice %>
+      </div>
+  <% end %>
+  <% if flash[:alert] %>
+      <div class="alert alert-block ">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= alert %>
+      </div>
+  <% end %>
+  <% if flash[:error] %>
+      <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= flash[:error] %>
+      </div>
+  <% end %>
+  <% if flash[:success] %>
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= flash[:success] %>
+      </div>
+  <% end %>
+  <!-- devise的提示信息 end -->
+
+  <div class="row-fluid sortable">
+
+    <div class="box span12">
+
+      <div class="box-header well" data-original-title>
+        <h2><%= @table.table_name %>-资料</h2>
+        <div class="box-icon">
+          <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+          <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+          <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+        </div>
+      </div>
+
+      <div class="box-content">
+        <p class="left">
+          <%= link_to(new_identity_table_table_form_path, class: "btn btn-large btn-primary") do %>
+              <i class="icon-white icon-plus-sign"></i>
+              添加数据
+          <% end %>
+        </p>
+        <table class="table table-bordered table-striped table-condensed">
+          <thead>
+          <tr>
+            <% @table_item = TableField.where(table_id: @table.id).order('field_turn') %>
+            <% @table_item.each do |item| %>
+                    <th><%= item.field_name %></th>
+            <% end %>
+            <th>日期</th>
+            <th>操作</th>
+          </tr>
+          <% @table_forms.each do |item| %>
+              <tr>
+                <% @table_item = TableField.where(table_id: @table.id).order('field_turn') %>
+                <% @table_item.each do |field_item| %>
+                    <% if field_item.field_type == 'string' %>
+                        <th><%= item.instance_eval("value#{field_item.field_turn}") %></th>
+                    <% end %>
+                    <% if field_item.field_type == 'date' %>
+                        <th><%= item.instance_eval("value#{field_item.field_turn}") %></th>
+                    <% end %>
+                    <% if field_item.field_type == 'radio' %>
+                        <th><%= item.instance_eval("value#{field_item.field_turn}") %></th>
+                    <% end %>
+                    <% if field_item.field_type == 'select' %>
+                        <th><%= item.instance_eval("value#{field_item.field_turn}") %></th>
+                    <% end %>
+                    <% if field_item.field_type == 'checkbox' %>
+                        <th><%= item.instance_eval("value#{field_item.field_turn}").split('-').join(' ') %></th>
+                    <% end %>
+                    <% if field_item.field_type == 'text' %>
+                        <th><%= raw(item.instance_eval("value#{field_item.field_turn}")) %></th>
+                    <% end %>
+                <% end %>
+                <td><%= item.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+                <td class="center" style="width: 240px;text-align: center">
+                  <%= link_to(identity_table_table_form_path(@table,item),class:'btn btn-success') do %>
+                      <i class="icon-zoom-in icon-white"></i>
+                      查看
+                  <% end %>
+                  <%= link_to(edit_identity_table_table_form_path(@table,item), class:'btn btn-info') do %>
+                      <i class="icon-edit icon-white"></i>
+                      编辑
+                  <% end %>
+                  <%= link_to(identity_table_table_form_path(@table,item), :method => :delete, :confirm => "你确定要删除该字段选项么?", class:'btn btn-danger') do %>
+                      <i class="icon-trash icon-white"></i>
+                      删除
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div>
+  <ul class="breadcrumb">
+    <li>
+      <a href="/">Home</a> <span class="divider">/</span>
+    </li>
+    <li>
+      <a href="<%= browse_monitors_path %>">访问数据表</a><span class="divider">/</span>
+    </li>
+  </ul>
+</div>
+<div class="row-fluid sortable">
+  <div class="box span12">
+    <div class="box-header well" data-original-title>
+      <h2><%= @browse_monitor.visit_datetime.strftime('%y-%m-%d %H:%M:%S') %></h2>
+      <div class="box-icon">
+        <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+        <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+        <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="box-content">
+      <table  class="table table-bordered table-striped">
+        <tr>
+          <td style="width: 150px"><h3>跳转网址</h3></td>
+          <td><%= @browse_monitor.page_url %></td>
+        </tr>
+        <tr>
+          <td><h3>访问时间</h3></td>
+          <td><%= @browse_monitor.visit_datetime.strftime('%y年%m月%d日 %H:%M:%S') %></td>
+        </tr>
+        <tr>
+          <td><h3>加载时间</h3></td>
+          <td><%= @browse_monitor.load_time %>(秒)</td>
+        </tr>
+        <tr>
+          <td><h3>访问IP</h3></td>
+          <td><%= @browse_monitor.visit_ip %></td>
+        </tr>
+        <tr>
+          <td><h3>浏览城市</h3></td>
+          <td><%= @browse_monitor.visit_city %></td>
+        </tr>
+      </table>
+      <div class="form-actions">
+        <%= link_to '返回' ,browse_monitors_path ,class:'btn btn-info' %>
+      </div>
+    </div>
+  </div>
+</div>

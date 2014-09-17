@@ -1,0 +1,108 @@
+<div>
+  <ul class="breadcrumb">
+    <li>
+      <a href="/">Home</a> <span class="divider">/</span>
+    </li>
+    <li>
+      <a href="<%= users_path %>">用户列表</a> <span class="divider">/</span>
+    </li>
+  </ul>
+</div>
+<div>
+  <!-- devise的提示信息 start -->
+  <% if flash[:notice] %>
+      <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= notice %>
+      </div>
+  <% end %>
+  <% if flash[:alert] %>
+      <div class="alert alert-block ">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= alert %>
+      </div>
+  <% end %>
+  <% if flash[:error] %>
+      <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= flash[:error] %>
+      </div>
+  <% end %>
+  <% if flash[:success] %>
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= flash[:success] %>
+      </div>
+  <% end %>
+  <!-- devise的提示信息 end -->
+  <% user = User.find_by_id(session[:user_id]) %>
+  <% if user.role == 'administrator' %>
+      <%= render 'partial/destroy' %>
+  <% end %>
+
+  <div class="row-fluid sortable">
+
+    <div class="box span12">
+
+      <div class="box-header well" data-original-title>
+        <h2>用户列表</h2>
+        <div class="box-icon">
+          <a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
+          <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+          <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+        </div>
+      </div>
+
+      <div class="box-content">
+        <table class="table table-bordered table-striped table-condensed">
+          <thead>
+          <tr>
+            <th style="font-size: 20px">头像</th>
+            <th style="font-size: 20px">账户</th>
+            <th style="font-size: 20px">姓名</th>
+            <th style="font-size: 20px">电话</th>
+            <th style="font-size: 20px">注册时间</th>
+            <th style="font-size: 20px">登录时间</th>
+            <th style="font-size: 20px">操作</th>
+          </tr>
+          </thead>
+          <% @users.each do |item| %>
+              <tr>
+                <th style="font-size: 20px;width: 150px"><%= image_tag(item.picture, size:'150x150') %></th>
+                <th style="font-size: 20px"><%= item.account %></th>
+                <th style="font-size: 20px"><%= item.name %></th>
+                <th style="font-size: 20px"><%= item.phone %></th>
+                <th style="font-size: 20px"><%= item.sign_time.strftime('%Y-%m-%d %H:%M:%S') %></th>
+                <th style="font-size: 20px">
+                  <% if item.lately_login.nil? %>
+                      还未登录
+                  <% else %>
+                      <%= item.lately_login.strftime('%Y-%m-%d %H:%M:%S') %>
+                  <% end %>
+                </th>
+                <td class="center" style="width: 200px;text-align: center">
+                  <% user = User.find_by_id(session[:user_id]) %>
+                  <% if user.role == 'administrator' %>
+                      <%= link_to(edit_user_path(item), class:'btn btn-info') do %>
+                          <i class="icon-edit icon-white"></i>
+                          编辑
+                      <% end %>
+                      <%= link_to(item, :method => :delete, :confirm => "你确定要删除该用户吗?", class:'btn btn-danger') do %>
+                          <i class="icon-trash icon-white"></i>
+                          删除
+                      <% end %>
+                  <% end %>
+                  <% if user.role == 'editor' %>
+                      <%= link_to(edit_user_path(item), class:'btn btn-info') do %>
+                          <i class="icon-edit icon-white"></i>
+                          编辑
+                      <% end %>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+        </table>
+      </div>
+    </div><!--/span-->
+  </div><!--/row-->
+</div>
